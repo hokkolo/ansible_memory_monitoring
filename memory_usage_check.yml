@@ -1,0 +1,11 @@
+---
+ - hosts: test
+   tasks: 
+   - name: Memory usage check
+     vars: 
+      freemem: "{{ansible_memory_mb.real.used}}"
+      mem: "{{ansible_memory_mb.real.total}}"
+      used: "{{ (ansible_memory_mb.real.used * 100) / ansible_memory_mb.real.total | int }}"
+     debug:
+       msg: "memory usage above 50%"       
+     when: used > '50'
