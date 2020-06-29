@@ -1,10 +1,10 @@
 ---
- - hosts: test
+ - hosts: localhost
    tasks: 
    - name: Memory usage check
      vars:
       THREASHHOLD: '50' 
-      freemem: "{{ansible_memory_mb.real.used}}"
+      freemem: "{{ansible_memory_mb.real.free}}"
       mem: "{{ansible_memory_mb.real.total}}"
       used: "{{ (ansible_memory_mb.real.used * 100) / ansible_memory_mb.real.total | int }}"
      debug:
