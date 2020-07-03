@@ -1,12 +1,12 @@
 ---
- - hosts: localhost
-   tasks: 
-   - name: Memory usage check
-     vars:
-      THREASHHOLD: '50' 
-      freemem: "{{ansible_memory_mb.real.free}}"
-      mem: "{{ansible_memory_mb.real.total}}"
-      used: "{{ (ansible_memory_mb.real.used * 100) / ansible_memory_mb.real.total | int }}"
-     debug:
-       msg: "memory usage above 50%"       
-     when: used > THREASHHOLD
+- name: Memory usage monitoring
+  hosts: localhost
+  vars:
+    - used: "{{ (ansible_memory_mb.real.used * 100) / ansible_memory_mb.real.total | int }}"
+    - THRESHOLD: '50'
+
+  tasks: 
+    - name: Checking memory usage
+      debug: 
+        msg: Memory usage is above Threshold 
+      when: used > THRESHOLD 
